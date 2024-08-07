@@ -7,12 +7,15 @@ import 'package:quote_generator_mobile_app/models/quote_model.dart';
 import '../helper/http_helper.dart';
 
 class GetRandomQuoteController extends GetxController {
-  late Box<Quote> quotesBox;
+  Box<Quote>? quotesBox;
+  RxInt quotelength = 0.obs;
   @override
   void onInit() {
     getQuote();
     Hive.openBox<Quote>('quotes').then((box) {
       quotesBox = box;
+      quotelength(quotesBox?.length);
+      update();
     });
     super.onInit();
   }
@@ -37,15 +40,12 @@ class GetRandomQuoteController extends GetxController {
 
   Future<void> addQuoteToFovirt() async {
     try {
-      await quotesBox.put(quote!.id, quote!);
-      print('addd');
-      print(quotesBox
-          .get(
-            quote!.id,
-          )!
-          .content);
+      await quotesBox?.put(quote!.id, quote!);
+      quotelength++;
+      update();
     } catch (e) {
       print(e.toString());
+      update();
     }
   }
 }

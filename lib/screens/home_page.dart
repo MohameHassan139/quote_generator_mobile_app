@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         const SizedBox(
           width: double.infinity,
         ),
-        const VeiwFavorite(),
+        VeiwFavorite(),
         const SizedBox(
           height: 12,
         ),
