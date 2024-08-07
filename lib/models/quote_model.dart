@@ -1,11 +1,22 @@
-class Quote {
+import 'package:hive/hive.dart';
+
+@HiveType(typeId: 0)
+class Quote extends HiveObject {
+  @HiveField(0)
   String? id;
+  @HiveField(1)
   String? content;
+  @HiveField(2)
   String? author;
+  @HiveField(3)
   List<String>? tags;
+  @HiveField(4)
   String? authorSlug;
+  @HiveField(5)
   int? length;
+  @HiveField(6)
   String? dateAdded;
+  @HiveField(7)
   String? dateModified;
 
   Quote(
@@ -48,5 +59,39 @@ class Quote {
     _data["dateAdded"] = dateAdded;
     _data["dateModified"] = dateModified;
     return _data;
+  }
+}
+
+
+
+
+class QuoteAdapter extends TypeAdapter<Quote> {
+  @override
+  final int typeId = 0;
+
+  @override
+  Quote read(BinaryReader reader) {
+    return Quote(
+      id: reader.readString(),
+      content: reader.readString(),
+      author: reader.readString(),
+      tags: reader.readList()?.cast<String>(),
+      authorSlug: reader.readString(),
+      length: reader.readInt(),
+      dateAdded: reader.readString(),
+      dateModified: reader.readString(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Quote obj) {
+    writer.writeString(obj.id ?? '');
+    writer.writeString(obj.content ?? '');
+    writer.writeString(obj.author ?? '');
+    writer.writeList(obj.tags ?? []);
+    writer.writeString(obj.authorSlug ?? '');
+    writer.writeInt(obj.length ?? 0);
+    writer.writeString(obj.dateAdded ?? '');
+    writer.writeString(obj.dateModified ?? '');
   }
 }

@@ -21,9 +21,7 @@ class HomePage extends StatelessWidget {
         const SizedBox(
           height: 12,
         ),
-        GetBuilder<GetRandomQuoteController>(
-          builder: (_) {
-          
+        GetBuilder<GetRandomQuoteController>(builder: (_) {
           if (getRandomQuoteController.isloading) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -42,17 +40,13 @@ class HomePage extends StatelessWidget {
               children: [
                 Text(
                   """${getRandomQuoteController.quote?.content}""",
-                  style:
-                      Theme.of(context ).textTheme.headlineSmall,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
                     """${getRandomQuoteController.quote?.author}""",
-                    style: Theme.of(context )
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                           color: AppColors.KgreyColor,
                         ),
                   ),
@@ -77,7 +71,7 @@ class HomePage extends StatelessWidget {
                         },
                         child: Text(
                           "Generate Another Quote",
-                          style: Theme.of(context )
+                          style: Theme.of(context)
                               .textTheme
                               .headlineSmall!
                               .copyWith(
@@ -97,7 +91,9 @@ class HomePage extends StatelessWidget {
                             width: 2.5,
                           )),
                       child: MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          getRandomQuoteController.addQuoteToFovirt();
+                        },
                         child: const Icon(
                           Icons.favorite,
                           color: AppColors.KprimaryColor,
